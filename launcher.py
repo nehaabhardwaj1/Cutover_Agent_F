@@ -3,6 +3,7 @@
 SAP Cutover Agent - GUI Launcher
 Provides on-screen Start / Stop buttons so end users never need a terminal.
 """
+import os
 import subprocess
 import sys
 import threading
@@ -11,7 +12,9 @@ import tkinter as tk
 from pathlib import Path
 
 # -- Config ------------------------------------------------------------------
-PYTHON = r"C:\Users\neha.a.bhardwaj\AppData\Local\Python\pythoncore-3.14-64\python.exe"
+PYTHON = os.environ.get("CUTOVER_PYTHON") or str(
+    Path(os.environ.get("LOCALAPPDATA", "")) / "Python"
+    / "pythoncore-3.14-64" / "python.exe")
 if not Path(PYTHON).exists():
     PYTHON = sys.executable   # fallback for portability
 

@@ -19,7 +19,13 @@ echo Starting server... (keep this window open)
 echo.
 
 cd /d "%~dp0"
-"C:\Users\neha.a.bhardwaj\AppData\Local\Python\pythoncore-3.14-64\python.exe" -m uvicorn server:app --host 0.0.0.0 --port 7878
+REM Python resolution: CUTOVER_PYTHON override, then the standard per-user
+REM install location, then PATH. No absolute user path is committed.
+set "PYTHON=%CUTOVER_PYTHON%"
+if not defined PYTHON set "PYTHON=%LOCALAPPDATA%\Python\pythoncore-3.14-64\python.exe"
+if not exist "%PYTHON%" set "PYTHON=python"
+
+"%PYTHON%" -m uvicorn server:app --host 0.0.0.0 --port 7878
 
 echo.
 echo Server stopped.

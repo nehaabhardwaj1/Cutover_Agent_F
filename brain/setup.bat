@@ -5,10 +5,14 @@ echo   SAP Cutover Brain — One-Time Setup
 echo ============================================
 echo.
 
-set PYTHON="C:\Users\neha.a.bhardwaj\AppData\Local\Python\pythoncore-3.14-64\python.exe"
+REM Python resolution: CUTOVER_PYTHON override, then the standard per-user
+REM install location, then PATH. No absolute user path is committed.
+set "PYTHON=%CUTOVER_PYTHON%"
+if not defined PYTHON set "PYTHON=%LOCALAPPDATA%\Python\pythoncore-3.14-64\python.exe"
+if not exist "%PYTHON%" set "PYTHON=python"
 
 REM Check Python
-%PYTHON% --version >nul 2>&1
+"%PYTHON%" --version >nul 2>&1
 if errorlevel 1 (
     echo ERROR: Python not found at expected path.
     pause
@@ -16,7 +20,7 @@ if errorlevel 1 (
 )
 
 echo [1/2] Installing Python dependencies...
-%PYTHON% -m pip install -r "%~dp0requirements.txt"
+"%PYTHON%" -m pip install -r "%~dp0requirements.txt"
 if errorlevel 1 (
     echo ERROR: pip install failed. Check your internet connection.
     pause
