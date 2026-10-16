@@ -1,0 +1,45 @@
+# ── Python ────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# ── Knowledge base: NEVER committed ───────────────────────
+# brain/files/ holds real client cutover plans and brain.db has them indexed.
+# Rebuild locally by uploading your own material through the Knowledge Base tab.
+brain/brain.db
+brain/brain.db.*
+brain/files/
+brain/data/
+brain/brain-vectors/
+brain/.deps_installed
+
+# ── Scraped SAP content (re-fetch with the Chrome extension) ──
+brain/phases/
+phases/
+brain-manifest.json
+brain/brain-manifest.json
+brain/page-text.txt
+
+# ── Local checkpoints and backups ─────────────────────────
+*.bak
+*.chk
+*.chk[0-9]
+*.chk[0-9][0-9]
+
+# ── Diagnostics / local docs ──────────────────────────────
+diagnostics.json
+brain/diagnostics.json
+*.docx
+
+# ── Tooling / editor ──────────────────────────────────────
+.claude/
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.sw?
+
+# ── Logs ──────────────────────────────────────────────────
+*.log

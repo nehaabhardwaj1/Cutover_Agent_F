@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "SAP Cutover Brain",
+  "version": "1.0",
+  "description": "Captures SAP Cutover roadmap file downloads for local AI indexing.",
+  "permissions": [
+    "tabs",
+    "scripting",
+    "activeTab",
+    "storage",
+    "notifications",
+    "webRequest",
+    "downloads"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://me.sap.com/*"],
+      "js": ["content_roadmap.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

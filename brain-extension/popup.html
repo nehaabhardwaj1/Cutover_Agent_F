@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { width: 340px; font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; }
+
+.hdr { background: #000; border-bottom: 3px solid #A100FF; padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+.logo { font-size: 22px; font-weight: 900; color: #A100FF; letter-spacing: -1px; line-height: 1; }
+.htitle { font-size: 13px; font-weight: 800; letter-spacing: 0.03em; }
+.hsub { font-size: 10px; color: #555; margin-top: 2px; }
+
+.body { padding: 14px 16px; }
+
+.card { background: #111; border: 0.5px solid #222; border-radius: 6px; padding: 13px 14px; margin-bottom: 10px; }
+.card-title { font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+.card-desc { font-size: 10px; color: #888; line-height: 1.8; margin-bottom: 12px; }
+.card-desc code { color: #A100FF; font-family: Consolas, monospace; font-size: 9px;
+                  word-break: break-all; overflow-wrap: anywhere; }
+.card-desc .step { color: #fff; font-weight: 700; }
+
+.row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: 11px; }
+.dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.dot-g { background: #00C875; }
+.dot-a { background: #FFAB00; }
+
+.btn { width: 100%; padding: 10px; border: none; font-size: 11px; font-weight: 700;
+       letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer;
+       border-radius: 4px; transition: background 0.15s; }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn-brain { background: #A100FF; color: #fff; }
+.btn-brain:hover:not(:disabled) { background: #7500C0; }
+
+.pb-wrap { background: #1a1a1a; height: 10px; margin: 10px 0 6px; overflow: hidden; border-radius: 5px; }
+.pb { height: 100%; background: linear-gradient(90deg,#7500C0,#A100FF); width: 0%; transition: width 0.4s ease; border-radius: 5px; }
+.pct { font-size: 10px; color: #aaa; margin-bottom: 8px; word-break: break-word; }
+
+.result { background: #0a001a; border: 0.5px solid #A100FF44; border-radius: 5px;
+          padding: 10px 12px; margin-bottom: 10px; }
+.rtitle { font-size: 11px; font-weight: 700; color: #A100FF; margin-bottom: 6px; }
+.rrow { display: flex; justify-content: space-between; font-size: 10px; margin-bottom: 3px; }
+.rk { color: #555; }
+.rv { color: #ccc; font-weight: 500; }
+
+.err { background: #1a0505; border: 0.5px solid #FF4D4D44; border-radius: 4px;
+       padding: 9px 11px; font-size: 10px; color: #FF6B6B; line-height: 1.6;
+       margin-bottom: 10px; white-space: pre-line; }
+
+.footer { background: #000; padding: 8px 16px; border-top: 0.5px solid #111;
+          font-size: 9px; color: #333; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="logo">&gt;</div>
+  <div>
+    <div class="htitle">SAP Cutover Brain</div>
+    <div class="hsub">Accenture · Knowledge Export · v1</div>
+  </div>
+</div>
+
+<div class="body">
+
+  <div id="loading" style="text-align:center;padding:20px 0;font-size:11px;color:#555">
+    Checking page…
+  </div>
+
+  <div id="notSap" style="display:none">
+    <div class="card" style="border-color:#FF4D4D33;background:#1a0505">
+      <div class="card-title" style="color:#FF4D4D">Not on SAP Roadmap Viewer</div>
+      <div class="card-desc">
+        Navigate to:<br>
+        <code>me.sap.com/roadmapviewer/searchresult/cutover/roadmapguids/IMPS4HANACLDENMGMT/types</code><br><br>
+        Scroll to the bottom so all 15 files load, then click this extension.
+      </div>
+    </div>
+  </div>
+
+  <div id="roadmapMode" style="display:none">
+
+    <div class="card">
+      <div class="row">
+        <div class="dot dot-g"></div>
+        <span style="color:#555;font-size:11px;min-width:90px">SAP session</span>
+        <span style="font-weight:500;font-size:11px">Active</span>
+      </div>
+      <div class="row">
+        <div class="dot dot-a"></div>
+        <span style="color:#555;font-size:11px;min-width:90px">Page</span>
+        <span style="font-weight:500;font-size:11px">Roadmap Viewer</span>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:#A100FF55">
+      <div class="card-title" style="color:#A100FF">Download Cutover Knowledge</div>
+      <div class="card-desc">
+        <span class="step">Step 1</span> — Go to:<br>
+        <code>me.sap.com/roadmapviewer/searchresult/cutover/roadmapguids/IMPS4HANACLDENMGMT/types</code><br><br>
+        <span class="step">Step 2</span> — Scroll slowly to the bottom so all 15 file cards are visible.<br><br>
+        <span class="step">Step 3</span> — Click <strong>Export Brain Data</strong>. The extension
+        scans the page, locates each file, downloads it automatically, and writes everything
+        to a folder you pick. No manual clicks needed.
+      </div>
+
+      <div id="brainProgArea" style="display:none">
+        <div class="pb-wrap"><div class="pb" id="brainPb"></div></div>
+        <div class="pct" id="brainPct">Preparing…</div>
+      </div>
+
+      <div id="brainResult" class="result" style="display:none">
+        <div class="rtitle">Export complete</div>
+        <div id="brainResultRows"></div>
+      </div>
+
+      <div id="brainErr" class="err" style="display:none"></div>
+
+      <button class="btn btn-brain" id="btnBrainExport">Export Brain Data</button>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <span>SAP Cutover Brain v1</span>
+  <span>Accenture</span>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

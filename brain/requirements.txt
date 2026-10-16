@@ -1,0 +1,8 @@
+# SAP Cutover Agent — brain server (lean, SQLite/FTS5 only, no vector deps)
+fastapi
+uvicorn
+pydantic
+pdfplumber
+openpyxl
+python-pptx
+beautifulsoup4
